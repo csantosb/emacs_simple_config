@@ -30,7 +30,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path (concat user-projects-directory "helm-perso-wiki"))
-(add-to-list 'load-path (concat user-projects-directory "emacs_config_simple"))
+(add-to-list 'load-path (concat user-projects-directory "emacs_simple_config"))
 
 (defmacro rename-modeline (package-name mode new-name)
   "PACKAGE-NAME, MODE, NEW-NAME."
