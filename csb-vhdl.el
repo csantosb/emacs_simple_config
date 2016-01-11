@@ -50,7 +50,7 @@
 ;; (advice-remove 'vhdl-beautify-buffer #'delete-trailing-whitespace)
 
 (with-eval-after-load 'vhdl-mode
-  (when (executable-find "ghdl")
+  (when (and (not csb/simple-config) (executable-find "ghdl"))
     (flycheck-define-checker vhdl-ghdl
                              "A VHDL syntax checker using ghdl."
                              :command ("ghdl" "-s" "--std=93" "--ieee=synopsys" "-fexplicit" source)

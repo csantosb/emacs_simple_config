@@ -22,11 +22,13 @@
 ;; (setq mylist '(emacs-lisp-mode org-mode))
 ;; (add-hook 'focus-out-hook (lambda () (when (member major-mode mylist) (save-buffer))))
 
-(defadvice switch-to-buffer (before save-buffer-now activate)
-  (when buffer-file-name (save-buffer)))
+(when (not csb/simple-config)
+  (defadvice switch-to-buffer (before save-buffer-now activate)
+    (when buffer-file-name (save-buffer))))
 
-(defadvice other-window (before other-window-now activate)
-  (when buffer-file-name (save-buffer)))
+(when (not csb/simple-config)
+  (defadvice other-window (before other-window-now activate)
+    (when buffer-file-name (save-buffer))))
 
 ;; (ad-unadvise 'desktop-save-buffer-p)
 ;; (defadvice switch-to-buffer (before set-font activate)

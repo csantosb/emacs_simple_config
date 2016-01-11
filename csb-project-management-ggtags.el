@@ -154,7 +154,7 @@ _M-x_  reload       _M-._  dwim        _M-,_  pop       _M-R_  prj ro
             ;; or else, you will have completion in every major mode, that's very annoying!
             (make-local-variable 'company-backends)
             ;; company-ggtags is the plugin to complete words
-            (add-to-list 'company-backends 'company-ggtags)))
+            (add-to-list 'company-backends 'company-gtags)))
 
 (provide 'csb-project-management-ggtags)
 ;;; csb-project-management-ggtags.el ends here

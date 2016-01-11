@@ -1,5 +1,9 @@
 
 ;; * Generic
+
+(defvar csb/simple-config t
+  "flag to determine if simple config is to apply")
+
 (defvar running-os-is-linux (eq system-type 'cygwin)
   "OS used as bootloader for emacs")
 
@@ -139,65 +143,7 @@
 	    (redraw-display)))
 
 ;; ** Emacs Lisp
-
-(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-  (add-hook hook (lambda () (flyspell-prog-mode))))
-
-(with-eval-after-load 'emacs-lisp
-  (define-key emacs-lisp-mode-map (kbd "M-j") 'forward-sexp)
-  (define-key emacs-lisp-mode-map (kbd "M-k") 'backward-sexp))
-
-;; Navigate - Slime
-;; Default Keys
-;; [[file:~/.emacs.d/el-get/package/elpa/elisp-slime-nav-20130613.1109/elisp-slime-nav.el::(defvar%20elisp-slime-nav-mode-map][Defaults]]
-;; These shadow ctags
-(with-eval-after-load 'elisp-slime-nav-mode-map
-  (define-key elisp-slime-nav-mode-map (kbd "M-.") 'elisp-slime-nav-find-elisp-thing-at-point)
-  (define-key elips-slime-nav-mode-map (kbd "M-,") 'pop-tag-mark)
-  (global-set-key (kbd "C-c C-d C-d") nil))
-
-;; Hook
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            ;; (setq-local orgstruct-heading-prefix-regexp "^ *;; *\\(\\**.*\\)")
-            ;; (add-to-list 'imenu-generic-expression '(" "  " *;; *\\(.*\\)" 1))
-            ;; (add-to-list 'imenu-generic-expression '(nil "^\\(?:[*]+\\).*$" 0))
-            ;; (add-to-list 'imenu-generic-expression '(nil "^ *;; *\\(\\*.*\\)" 1))
-            ;; (add-to-list 'imenu-generic-expression '(nil "^ *;;; +\\([*]+ .*\\)" 1))
-	    (outline-minor-mode 1)
-	    (nameless-mode-from-hook)
-            (setq-local imenu-generic-expression
-                        '(("" "^ *;; +\\([*]+ .*\\)" 1)
-                          ("" "^\\s-*(\\(cl-def\\(?:ine-compiler-macro\\|macro\\|subst\\|un\\)\\|def\\(?:advice\\|generic\\|ine-\\(?:compil\\(?:ation-mode\\|er-macro\\)\\|derived-mode\\|g\\(?:\\(?:eneric\\|lobal\\(?:\\(?:ized\\)?-minor\\)\\)-mode\\)\\|m\\(?:ethod-combination\\|inor-mode\\|odify-macro\\)\\|s\\(?:etf-expander\\|keleton\\)\\)\\|m\\(?:acro\\|ethod\\)\\|s\\(?:etf\\|ubst\\)\\|un\\*?\\)\\)\\s-+\\(\\(\\sw\\|\\s_\\)+\\)" 2)
-                          ("Variables" "^\\s-*(\\(def\\(?:c\\(?:onst\\(?:ant\\)?\\|ustom\\)\\|ine-symbol-macro\\|parameter\\)\\)\\s-+\\(\\(\\sw\\|\\s_\\)+\\)" 2)
-                          ("Variables" "^\\s-*(defvar\\s-+\\(\\(\\sw\\|\\s_\\)+\\)[[:space:]\n]+[^)]" 1)
-                          ("Types" "^\\s-*(\\(cl-def\\(?:struct\\|type\\)\\|def\\(?:class\\|face\\|group\\|ine-\\(?:condition\\|widget\\)\\|package\\|struct\\|t\\(?:\\(?:hem\\|yp\\)e\\)\\)\\)\\s-+'?\\(\\(\\sw\\|\\s_\\)+\\)" 2)))
-            (elisp-slime-nav-mode)
-            ;; (remove-elc-on-save) done in package auto-compile
-            (enable-paredit-mode)
-            (rename-modeline "lisp-mode" emacs-lisp-mode "elisp")
-            (require 'helm-dash)
-            (setq-local helm-dash-common-docsets '("Emacs Lisp"))
-            (setq-local helm-dash-docsets '("Emacs Lisp"))
-            ;; Company
-            (require 'company-elisp)
-            ;; make `company-backends' local is critcal
-            ;; or else, you will have completion in every major mode, that's very annoying!
-            (make-local-variable 'company-backends)
-            ;; company-elisp is the plugin to complete words
-            (add-to-list 'company-backends 'company-elisp)
-            ;;
-            ;; (make-local-variable 'company-backends)
-            ;; (add-to-list 'company-backends 'company-elisp)
-            ;; (add-to-list 'company-backends 'company-capf)
-            (helm-dash-activate-docset "Emacs Lisp")))
-
-(add-hook 'lisp-interaction-mode-hook
-          (lambda ()
-            (enable-paredit-mode)))
-
-(add-hook 'ielm-mode-hook 'eldoc-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook 'eldoc-mode)
+(require 'csb-elisp nil)
 
 ;; * vhdl mode
 (require 'csb-vhdl)
