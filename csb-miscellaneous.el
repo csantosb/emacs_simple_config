@@ -244,25 +244,27 @@ and so on."
 ;;   (find-file (concat org-config-path filename)))
 
 (defun endless/round-quotes (italicize)
-    "Insert “” and leave point in the middle.
+  "Insert “” and leave point in the middle.
   With prefix argument ITALICIZE, insert /“”/ instead
   \(meant for org-mode).
   Inside a code-block, just call `self-insert-command'."
-    (interactive "P")
-    (if (and (derived-mode-p 'org-mode)
-             (org-in-block-p '("src" "latex" "html")))
-        (call-interactively #'self-insert-command)
-      (if (looking-at "”[/=_\\*]?")
-          (goto-char (match-end 0))
-        (when italicize
-          (if (derived-mode-p 'markdown-mode)
-              (insert "__")
-            (insert "//"))
-          (forward-char -1))
-        (insert "“”")
-        (forward-char -1))))
+  (interactive "P")
+  (if (and (derived-mode-p 'org-mode)
+	   (org-in-block-p '("src" "latex" "html")))
+      (call-interactively #'self-insert-command)
+    (if (looking-at "”[/=_\\*]?")
+	(goto-char (match-end 0))
+      (when italicize
+	(if (derived-mode-p 'markdown-mode)
+	    (insert "__")
+	  (insert "//"))
+	(forward-char -1))
+      (insert "“”")
+      (forward-char -1))))
 
-(define-key org-mode-map "\"" #'endless/round-quotes)
+(with-eval-after-load 'org
+  (define-key org-mode-map "\"" #'endless/round-quotes))
+
 ;; (eval-after-load 'markdown-mode
 ;;   '(define-key markdown-mode-map "\""
 ;;      #'endless/round-quotes))

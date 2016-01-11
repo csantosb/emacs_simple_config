@@ -8,7 +8,9 @@
 ;;
 ;;; Code:
 
-(org-require 'csb-project-management-ggtags csb/compile-org-require)
+(if (file-exists-p (concat user-projects-directory "perso/wikidata/emacs.cat/org-config.cat/csb-project-management-ggtags.page"))
+    (org-require 'csb-project-management-ggtags csb/compile-org-require)
+  (require 'csb-project-management-ggtags nil))
 
 (stante-after perspective
               ;; swithching

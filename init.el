@@ -380,11 +380,6 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (global-company-mode t)
 
-;; * popwin
-(require 'popwin)
-(popwin-mode 1)
-(setq-default display-buffer-function 'popwin:display-buffer)
-
 ;; * dired
 (require 'dired-x)
 (require 'csb-dired)
