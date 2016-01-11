@@ -67,12 +67,19 @@
               (add-to-list 'savehist-additional-variables 'kill-ring)
               (setq savehist-file (expand-file-name "history" user-emacs-directory)))
 
-(require 'saveplace)
-(save-place-mode 1)
-(stante-after saveplace
-              (setq-default save-place t)
-              (setq-default save-place-file
-                            (expand-file-name ".saved-places" user-emacs-directory)))
+(if (version< emacs-version "24")
+    (progn
+      (setq-default save-place-file
+                    (expand-file-name ".saved-places" user-emacs-directory))
+      (setq-default save-place t)
+      (require 'saveplace))
+  (progn
+    (require 'saveplace)
+    (save-place-mode 1)
+    (stante-after saveplace
+                  (setq-default save-place t)
+                  (setq-default save-place-file
+                                (expand-file-name ".saved-places" user-emacs-directory)))))
 
 (setq-default make-backup-files t
               ;; store all backup in local backups dir

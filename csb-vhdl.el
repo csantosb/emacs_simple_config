@@ -52,14 +52,13 @@
 (with-eval-after-load 'vhdl-mode
   (when (and (not csb/simple-config) (executable-find "ghdl"))
     (flycheck-define-checker vhdl-ghdl
-                             "A VHDL syntax checker using ghdl."
-                             :command ("ghdl" "-s" "--std=93" "--ieee=synopsys" "-fexplicit" source)
-                             :error-patterns
-                             ((error line-start (file-name) ":" line ":" column
-                                     ": " (message) line-end))
-                             :modes vhdl-mode)))
-
-  (add-hook 'vhdl-mode-hook (lambda () (flycheck-select-checker 'vhdl-ghdl)))
+      "A VHDL syntax checker using ghdl."
+      :command ("ghdl" "-s" "--std=93" "--ieee=synopsys" "-fexplicit" source)
+      :error-patterns
+      ((error line-start (file-name) ":" line ":" column
+              ": " (message) line-end))
+      :modes vhdl-mode)
+    (add-hook 'vhdl-mode-hook (lambda () (flycheck-select-checker 'vhdl-ghdl)))))
 
 (with-eval-after-load 'vhdl-mode
 
