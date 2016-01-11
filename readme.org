@@ -1,0 +1,9 @@
+#+TITLE: Simple Emacs Config
+
+Simplified version of my emacs config. To be used under cygwin, etc.
+
+Just clone it, and start as
+
+#+begin_src sh
+  emacs -Q -l ~/Projects/perso/emacs_simple_config/init.el
+#+end_src
